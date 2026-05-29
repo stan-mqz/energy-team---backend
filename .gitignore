@@ -33,3 +33,7 @@ Thumbs.db
 # Optional logs (Logs de errores o de ejecución)
 logs
 *.log
+
+
+
+mysql_data/
