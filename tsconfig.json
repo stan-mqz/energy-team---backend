@@ -1,0 +1,41 @@
+{
+  "compilerOptions": {
+    /* Opciones Principales */
+    "target": "ES2022",                          /* Especifica la versión del lenguaje ECMAScript objetivo */
+    "module": "CommonJS",                        /* Genera código de módulos adecuado para Node.js */
+    "lib": ["ES2022"],                           /* Especifica los archivos de biblioteca incluidos en la compilación */
+    "allowJs": false,                            /* No permite que se compilen archivos JavaScript */
+    "outDir": "./dist",                          /* Carpeta de salida para el código compilado a JS */
+    "rootDir": "./src",                          /* Carpeta raíz de tus archivos de origen TypeScript */
+    
+    /* Comprobaciones de Tipo Estrictas */
+    "strict": true,                              /* Habilita todas las comprobaciones de tipo estrictas */
+    "noImplicitAny": true,                       /* Genera error en expresiones y declaraciones con un tipo 'any' implícito */
+    "strictNullChecks": true,                    /* Habilita comprobaciones estrictas de nulos */
+    "strictFunctionTypes": true,                 /* Habilita la comprobación estricta de tipos de función */
+    "noImplicitThis": true,                      /* Genera error en expresiones 'this' con un tipo 'any' implícito */
+    "alwaysStrict": true,                        /* Analiza en modo estricto y emite "use strict" para cada archivo fuente */
+
+    /* Comprobaciones Adicionales */
+    "noUnusedLocals": true,                      /* Reporta errores sobre variables locales no usadas */
+    "noUnusedParameters": true,                  /* Reporta errores sobre parámetros no usados en funciones */
+    "noImplicitReturns": true,                   /* Reporta error cuando no todas las rutas de código en una función devuelven un valor */
+    "noFallthroughCasesInSwitch": true,           /* Reporta errores para casos caídos en declaraciones switch */
+
+    /* Interoperabilidad de Módulos */
+    "moduleResolution": "node",        
+    "ignoreDeprecations": "6.0",          /* Determina cómo se resuelven los módulos (estrategia de Node.js) */
+    "esModuleInterop": true,                     /* Emite JavaScript adicional para facilitar el soporte de importación de módulos CommonJS */
+    "forceConsistentCasingInFileNames": true,    /* No permite referencias con mayúsculas y minúsculas inconsistentes al mismo archivo */
+
+    /* Opciones Avanzadas */
+    "skipLibCheck": true                         /* Omite la comprobación de tipos de todos los archivos de declaración (*.d.ts) */
+  },
+  "include": [
+    "src/**/*"                                   /* Incluye todos los archivos dentro de la carpeta src */
+  ],
+  "exclude": [
+    "node_modules",                              /* Excluye la carpeta de dependencias */
+    "dist"                                       /* Excluye la carpeta de salida de producción */
+  ]
+}

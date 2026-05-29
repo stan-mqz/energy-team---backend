@@ -1,0 +1,35 @@
+
+# Node dependencies (Nunca subir las dependencias de npm)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+
+# TypeScript compilation output (No subir el código compilado a JS, se genera al hacer build)
+dist/
+build/
+
+# Environment variables (CRÍTICO: No subir contraseñas de MySQL ni puertos)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Operating System files (Archivos basura del sistema operativo)
+.DS_Store
+Thumbs.db
+
+# IDEs and Code Editors (Configuraciones locales de editores)
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# Optional logs (Logs de errores o de ejecución)
+logs
+*.log
