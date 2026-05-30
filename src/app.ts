@@ -1,7 +1,13 @@
 import express from 'express';
 import gameRoutes from './routes/games.routes';
+import section6Routes from './routes/section6.routes';
 
 const app = express();
+
+app.use(
+    "/api/section6",
+    section6Routes
+);
 
 // Middlewares
 app.use(express.json());
