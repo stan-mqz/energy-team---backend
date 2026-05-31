@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 
 import gameRoutes from './routes/games.routes';
 import section6Routes from './routes/section6.routes';
@@ -7,6 +8,9 @@ import section6ValidateRoutes from "./routes/section6Validate.routes";
 import section6StatsRoutes from "./routes/section6Stats.routes";
 
 const app = express();
+
+app.use(cors());
+
 
 // Middlewares
 app.use(express.json());
