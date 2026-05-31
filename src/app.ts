@@ -1,23 +1,35 @@
 import express from 'express';
+
 import gameRoutes from './routes/games.routes';
 import section6Routes from './routes/section6.routes';
+import section6QuestionRoutes from "./routes/section6Question.routes";
+import section6ValidateRoutes from "./routes/section6Validate.routes";
+import section6StatsRoutes from "./routes/section6Stats.routes";
 
 const app = express();
-
-app.use(
-    "/api/section6",
-    section6Routes
-);
 
 // Middlewares
 app.use(express.json());
 
-// Prefijo global para las rutas de la API REST
+// Routes
+
+app.use("/api/section6/stats", section6StatsRoutes);
+
+app.use("/api/section6", section6Routes);
+
+app.use("/api/section6/questions", section6QuestionRoutes);
+
+app.use("/api/section6/validate", section6ValidateRoutes);
+
 app.use('/api/semana7', gameRoutes);
 
-// Manejo de rutas no encontradas
+app.use(express.static("public"));
+
+// 404
 app.use((req, res) => {
-    res.status(404).json({ message: "Ruta no encontrada." });
+    res.status(404).json({
+        message: "Ruta no encontrada."
+    });
 });
 
 export default app;
