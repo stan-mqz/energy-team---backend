@@ -1,46 +1,62 @@
 // src/services/section3.service.ts
 import { UserAnswer, ValidationResult } from "../types/section3.types";
-import { 
-  getQuestionsFromDB, 
-  incrementCorrectAnswer, 
+import {
+  getQuestionsFromDB,
+  incrementCorrectAnswer,
   incrementIncorrectAnswer,
-  getStatsFromDB 
+  getStatsFromDB,
 } from "../repositories/section3.repository";
 
+/**
+ * Retorna las preguntas del Tema 3 sin exponer la respuesta correcta al cliente
+ */
 export const getQuestionsService = async () => {
-  // Retornamos las preguntas omitiendo la respuesta correcta en el listado inicial
   const questions = await getQuestionsFromDB();
-  return questions.map(({ id, question, options }) => ({ id, question, options }));
+  return questions.map(({ id, number, question, options }) => ({
+    id,
+    number,
+    question,
+    options,
+  }));
 };
 
+/**
+ * Valida las respuestas del usuario contra la BD,
+ * actualiza los contadores en question_stats y devuelve el resultado
+ */
 export const validateAnswersService = async (answers: UserAnswer[]) => {
   const correctAnswers = await getQuestionsFromDB();
+
   let score = 0;
   let correctCount = 0;
   const results: ValidationResult[] = [];
 
   for (const userAnswer of answers) {
-    const question = correctAnswers.find(q => q.id === userAnswer.questionId);
-    
+    // Forzar número para evitar fallos por string vs number (ej: "301" !== 301)
+    const questionId = Number(userAnswer.questionId);
+    const question = correctAnswers.find((q) => q.id === questionId);
+
     if (!question) continue;
 
-    // Comparación flexible limpiando espacios y mayúsculas
-    const isCorrect = question.correct_answer.trim().toLowerCase() === userAnswer.answer.trim().toLowerCase() ||
-                      question.correct_answer.trim().toLowerCase().includes(userAnswer.answer.trim().toLowerCase());
+    // Comparación flexible: limpia espacios y mayúsculas
+    const normalize = (str: string) => str.trim().toLowerCase();
+    const isCorrect =
+      normalize(question.correct_answer) === normalize(userAnswer.answer) ||
+      normalize(question.correct_answer).includes(normalize(userAnswer.answer));
 
     results.push({
-      questionId: userAnswer.questionId,
+      questionId,
       selectedAnswer: userAnswer.answer,
       correctAnswer: question.correct_answer,
-      correct: isCorrect
+      correct: isCorrect,
     });
 
     if (isCorrect) {
-      score += 20; // 5 preguntas = 100 puntos max
+      score += 20; // 5 preguntas = 100 puntos máx
       correctCount++;
-      await incrementCorrectAnswer(userAnswer.questionId);
+      await incrementCorrectAnswer(questionId);
     } else {
-      await incrementIncorrectAnswer(userAnswer.questionId);
+      await incrementIncorrectAnswer(questionId);
     }
   }
 
@@ -48,10 +64,13 @@ export const validateAnswersService = async (answers: UserAnswer[]) => {
     results,
     score,
     correctAnswers: correctCount,
-    totalQuestions: correctAnswers.length
+    totalQuestions: correctAnswers.length,
   };
 };
 
+/**
+ * Devuelve las estadísticas por pregunta del Tema 3 desde la BD
+ */
 export const getStatsService = async () => {
   return await getStatsFromDB();
 };

@@ -1,100 +1,94 @@
 // src/repositories/section3.repository.ts
+import { RowDataPacket } from "mysql2";
 import pool from "../config/database";
-import { Section3Question } from "../types/section3.types";
 
-// Base de datos en memoria pre-cargada para las preguntas (Tema 3)
-const section3Questions: Section3Question[] = [
-  {
-    id: "t3_q1",
-    number: 1,
-    question: "¿Por qué es conveniente tomar las cacerolas calientes por el mango?",
-    correct_answer: "Porque el mango suele ser de un material aislante térmico que evita que el calor se transfiera a la mano",
-    options: [
-      "Porque el mango suele ser de un material aislante térmico que evita que el calor se transfiera a la mano",
-      "Porque el mango está más frío que el resto de la cacerola al ser más delgado",
-      "Porque el mango conduce el calor más rápido y lo disipa antes de llegar a la mano",
-      "Porque agarrar el mango requiere menos fuerza y así no se calienta la mano",
-    ],
-  },
-  {
-    id: "t3_q2",
-    number: 2,
-    question: "¿Por qué un sorbete empieza a derretirse después de un tiempo de estar servido?",
-    correct_answer: "Porque el entorno está a mayor temperatura y le transfiere energía en forma de calor",
-    options: [
-      "Porque el entorno está a mayor temperatura y le transfiere energía en forma de calor",
-      "Porque el sorbete pierde su energía interna al estar expuesto al aire",
-      "Porque el recipiente absorbe el frío del sorbete y lo calienta",
-      "Porque la gravedad comprime las moléculas y genera calor dentro del sorbete",
-    ],
-  },
-  {
-    id: "t3_q3",
-    number: 3,
-    question: "¿Qué es la energía térmica?",
-    correct_answer: "Es la energía que posee un cuerpo debido al movimiento de las partículas que lo conforman",
-    options: [
-      "Es la energía que posee un cuerpo debido al movimiento de las partículas que lo conforman",
-      "Es la cantidad de calor que un cuerpo puede absorber antes de cambiar de estado",
-      "Es la temperatura medida en el interior de un objeto sólido",
-      "Es la energía que se genera únicamente cuando dos cuerpos entran en contacto",
-    ],
-  },
-];
-
-export const getQuestionsFromDB = async (): Promise<Section3Question[]> => {
-  return [...section3Questions];
-};
+interface DBQuestion extends RowDataPacket {
+  id: number;
+  topic: string;
+  question: string;
+  option_a: string;
+  option_b: string;
+  option_c: string;
+  correct_answer: string;
+}
 
 /**
- * Incrementa el contador de respuestas correctas en MySQL.
- * Utiliza 'ON DUPLICATE KEY UPDATE' para insertar el registro si no existía de antemano.
+ * Obtiene todas las preguntas del Tema 3 (thermal) desde la base de datos
  */
-export const incrementCorrectAnswer = async (questionId: string): Promise<void> => {
-  const question = section3Questions.find(q => q.id === questionId);
-  const questionNumber = question ? question.number : 0;
+export const getQuestionsFromDB = async (): Promise<any[]> => {
+  const [rows] = await pool.query<DBQuestion[]>(`
+    SELECT id, topic, question, option_a, option_b, option_c, correct_answer
+    FROM questions
+    WHERE topic = 'thermal'
+    ORDER BY id ASC
+  `);
 
-  const query = `
-    INSERT INTO section3_stats (question_id, number, correct_count, incorrect_count)
-    VALUES (?, ?, 1, 0)
-    ON DUPLICATE KEY UPDATE correct_count = correct_count + 1;
-  `;
-  
-  await pool.execute(query, [questionId, questionNumber]);
+  return rows.map((row) => ({
+    id: row.id,
+    number: row.id - 300, // Genera número de pregunta relativo (1, 2, 3...)
+    question: row.question,
+    correct_answer: row.correct_answer,
+    options: [row.option_a, row.option_b, row.option_c],
+  }));
 };
 
 /**
- * Incrementa el contador de respuestas incorrectas en MySQL.
+ * Incrementa el contador de respuestas correctas en question_stats.
+ * Si aún no existe la fila para ese question_id, la crea automáticamente.
  */
-export const incrementIncorrectAnswer = async (questionId: string): Promise<void> => {
-  const question = section3Questions.find(q => q.id === questionId);
-  const questionNumber = question ? question.number : 0;
-
-  const query = `
-    INSERT INTO section3_stats (question_id, number, correct_count, incorrect_count)
-    VALUES (?, ?, 0, 1)
-    ON DUPLICATE KEY UPDATE incorrect_count = incorrect_count + 1;
-  `;
-
-  await pool.execute(query, [questionId, questionNumber]);
+export const incrementCorrectAnswer = async (
+  questionId: number
+): Promise<void> => {
+  await pool.query(
+    `
+    INSERT INTO question_stats (question_id, correct_count, incorrect_count)
+    VALUES (?, 1, 0)
+    ON DUPLICATE KEY UPDATE correct_count = correct_count + 1
+    `,
+    [questionId]
+  );
 };
 
 /**
- * Recupera todas las estadísticas agregadas directamente de la Base de Datos.
+ * Incrementa el contador de respuestas incorrectas en question_stats.
+ * Si aún no existe la fila para ese question_id, la crea automáticamente.
+ */
+export const incrementIncorrectAnswer = async (
+  questionId: number
+): Promise<void> => {
+  await pool.query(
+    `
+    INSERT INTO question_stats (question_id, correct_count, incorrect_count)
+    VALUES (?, 0, 1)
+    ON DUPLICATE KEY UPDATE incorrect_count = incorrect_count + 1
+    `,
+    [questionId]
+  );
+};
+
+/**
+ * Recupera las estadísticas del Tema 3 (thermal) desde MySQL
  */
 export const getStatsFromDB = async () => {
-  const query = `
-    SELECT 
-      question_id AS questionId,
-      correct_count AS correctCount,
-      incorrect_count AS incorrectCount,
-      number
-    FROM section3_stats
-    ORDER BY number ASC;
-  `;
-  
-  const [rows] = await pool.execute(query);
+  const [rows] = await pool.query(`
+    SELECT
+      q.id                                      AS questionId,
+      q.question,
+      qs.correct_count                          AS correctCount,
+      qs.incorrect_count                        AS incorrectCount,
+      ROUND(
+        (
+          qs.correct_count /
+          NULLIF(qs.correct_count + qs.incorrect_count, 0)
+        ) * 100,
+        2
+      )                                         AS success_rate,
+      (q.id - 300)                              AS number
+    FROM questions q
+    INNER JOIN question_stats qs ON q.id = qs.question_id
+    WHERE q.topic = 'thermal'
+    ORDER BY q.id ASC
+  `);
+
   return rows;
 };
-
-export default section3Questions;

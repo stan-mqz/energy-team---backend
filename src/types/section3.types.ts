@@ -1,27 +1,30 @@
 // src/types/section3.types.ts
 
 export interface Section3Question {
-  id: string;
+  id: number;
   number: number;
   question: string;
-  options?: string[]; // Para preguntas de opción múltiple o selección
+  options?: string[];
   correct_answer: string;
 }
 
 export interface UserAnswer {
-  questionId: string;
+  questionId: number;
   answer: string;
 }
 
 export interface ValidationResult {
-  questionId: string;
+  questionId: number;
   selectedAnswer: string;
   correctAnswer: string;
   correct: boolean;
 }
 
 export interface Section3Stats {
-  questionId: string;
+  questionId: number;
+  question: string;
   correctCount: number;
   incorrectCount: number;
+  success_rate: number;
+  number: number;
 }
