@@ -6,6 +6,7 @@ import section6Routes from './routes/section6.routes';
 import section6QuestionRoutes from "./routes/section6Question.routes";
 import section6ValidateRoutes from "./routes/section6Validate.routes";
 import section6StatsRoutes from "./routes/section6Stats.routes";
+import section1Routes from "./routes/section1.routes";
 
 const app = express();
 
@@ -26,6 +27,8 @@ app.use("/api/section6/questions", section6QuestionRoutes);
 app.use("/api/section6/validate", section6ValidateRoutes);
 
 app.use('/api/semana7', gameRoutes);
+
+app.use("/api/section1", section1Routes);
 
 app.use(express.static("public"));
 
