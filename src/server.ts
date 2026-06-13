@@ -1,11 +1,19 @@
-import app from './app';
-import dotenv from 'dotenv';
+import app from "./app";
+import { testConnection } from "./config/database";
+import dotenv from "dotenv";
 
 dotenv.config();
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-    console.log(`Servidor corriendo en http://localhost:${PORT}`);
-    console.log(`API de Energía Mecánica lista para usarse.`);
-});
+const startServer = async () => {
+
+    await testConnection();
+
+    app.listen(PORT, () => {
+        console.log(`🚀 Server running on port ${PORT}`);
+    });
+
+};
+
+startServer();
