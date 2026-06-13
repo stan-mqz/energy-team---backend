@@ -15,7 +15,7 @@ importers:
         specifier: ^16.4.5
         version: 16.6.1
       express:
-        specifier: ^4.19.2
+        specifier: ^4.22.2
         version: 4.22.2
       mysql2:
         specifier: ^3.9.7
@@ -23,9 +23,6 @@ importers:
       nodemon:
         specifier: ^3.1.14
         version: 3.1.14
-      tsx:
-        specifier: ^4.22.3
-        version: 4.22.3
     devDependencies:
       '@types/cors':
         specifier: ^2.8.19
@@ -39,8 +36,11 @@ importers:
       ts-node-dev:
         specifier: ^2.0.0
         version: 2.0.0(@types/node@20.19.41)(typescript@5.9.3)
+      tsx:
+        specifier: ^4.22.3
+        version: 4.22.3
       typescript:
-        specifier: ^5.4.3
+        specifier: ^5.9.3
         version: 5.9.3
 
 packages:

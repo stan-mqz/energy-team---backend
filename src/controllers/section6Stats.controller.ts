@@ -7,7 +7,7 @@ import {
 
 export const getSection6StatsController =
     async (
-        req: Request,
+        _req: Request,
         res: Response
     ) => {
 

@@ -32,13 +32,15 @@ app.use("/api/section6", section6Routes);
 app.use("/api/section6/questions", section6QuestionRoutes);
 
 app.use("/api/section6/validate", section6ValidateRoutes);
+app.use("/api/section5/validate", section5ValidateRoutes);
+
 
 app.use("/api/semana7", gameRoutes);
 
 app.use(express.static("public"));
 
 // 404
-app.use((req, res) => {
+app.use((_req, res) => {
   res.status(404).json({
     message: "Ruta no encontrada.",
   });

@@ -7,7 +7,7 @@ import {
 } from "../services/section3.service";
 
 export const getQuestions = async (
-  req: Request,
+  _req: Request,
   res: Response
 ): Promise<void> => {
   try {
@@ -40,7 +40,7 @@ export const validateAnswers = async (
 };
 
 export const getStats = async (
-  req: Request,
+  _req: Request,
   res: Response
 ): Promise<void> => {
   try {
