@@ -2,7 +2,7 @@
   "compilerOptions": {
     /* Opciones Principales */
     "target": "ES2022",                          /* Especifica la versión del lenguaje ECMAScript objetivo */
-    "module": "CommonJS",                        /* Genera código de módulos adecuado para Node.js */
+    "module": "nodenext",                        /* Genera código de módulos adecuado para Node.js */
     "lib": ["ES2022"],                           /* Especifica los archivos de biblioteca incluidos en la compilación */
     "allowJs": false,                            /* No permite que se compilen archivos JavaScript */
     "outDir": "./dist",                          /* Carpeta de salida para el código compilado a JS */
@@ -23,8 +23,8 @@
     "noFallthroughCasesInSwitch": true,           /* Reporta errores para casos caídos en declaraciones switch */
 
     /* Interoperabilidad de Módulos */
-    "moduleResolution": "node",        
-    "ignoreDeprecations": "6.0",          /* Determina cómo se resuelven los módulos (estrategia de Node.js) */
+    "moduleResolution": "nodenext",        
+    "ignoreDeprecations": "5.0",          /* Determina cómo se resuelven los módulos (estrategia de Node.js) */
     "esModuleInterop": true,                     /* Emite JavaScript adicional para facilitar el soporte de importación de módulos CommonJS */
     "forceConsistentCasingInFileNames": true,    /* No permite referencias con mayúsculas y minúsculas inconsistentes al mismo archivo */
 

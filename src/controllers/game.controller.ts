@@ -3,55 +3,55 @@ import { GameModel, GameScore } from '../models/game.model';
 
 export class GameController {
     
-    // 1. Obtener preguntas del juego de Energía Mecánica (Semana 7)
-    static getGameQuestions(req: Request, res: Response) {
-        // Banco de preguntas basado estrictamente en el libro de texto (Semana 7)
+    // 1. Obtener preguntas del juego de Transformaciones de la Energía
+    static getGameQuestions(_req: Request, res: Response) {
+        // Banco de preguntas basado en el tema de Transformaciones de la Energía
         const questions = [
             {
                 id: 1,
-                question: "¿De qué factores depende principalmente la energía mecánica?",
+                question: "¿Qué transformación de energía ocurre principalmente al encender una bombilla o foco?",
                 options: [
-                    "De la temperatura y el color del objeto.",
-                    "De la ubicación (altura) y del movimiento del objeto.",
-                    "Únicamente de la masa en reposo."
+                    "De energía eléctrica a energía luminosa y térmica.",
+                    "De energía química a térmica.",
+                    "De energía mecánica a eléctrica."
                 ],
-                answerIndex: 1 // Segunda opción [cite: 17, 18]
+                answerIndex: 0
             },
             {
                 id: 2,
-                question: "Si lanzas una esfera de plastilina desde el doble de altura (60 cm en vez de 30 cm), ¿qué sucede con el agua del vaso?",
+                question: "¿Qué tipo de energía se transforma en energía mecánica (cinética) cuando un automóvil se mueve?",
                 options: [
-                    "El agua derramada disminuye.",
-                    "El nivel del agua se mantiene exactamente igual.",
-                    "Se derrama más agua porque la esfera impacta con mayor energía."
+                    "Energía luminosa.",
+                    "Energía química (del combustible).",
+                    "Energía nuclear."
                 ],
-                answerIndex: 2 // Tercera opción [cite: 13, 15, 18]
+                answerIndex: 1
             },
             {
                 id: 3,
-                question: "¿Cómo se llama la energía mecánica que posee un cuerpo debido a su altura o posición?",
+                question: "En un panel solar, la luz del sol se transforma directamente en:",
                 options: [
-                    "Energía potencial.",
-                    "Energía cinética.",
-                    "Energía térmica."
+                    "Energía mecánica.",
+                    "Energía química.",
+                    "Energía eléctrica."
                 ],
-                answerIndex: 0 // Primera opción [cite: 18]
+                answerIndex: 2
             },
             {
                 id: 4,
-                question: "Cuando un objeto se encuentra en movimiento libre, ¿cómo se le conoce a su energía mecánica?",
+                question: "Cuando frotas tus manos para calentarlas en un día frío, ¿qué transformación ocurre?",
                 options: [
-                    "Energía elástica.",
-                    "Energía cinética.",
-                    "Energía estática."
+                    "De energía térmica a mecánica.",
+                    "De energía química a eléctrica.",
+                    "De energía mecánica a térmica."
                 ],
-                answerIndex: 1 // Segunda opción [cite: 19]
+                answerIndex: 2
             }
         ];
 
         return res.status(200).json({
             unidad: "Unidad 2: Energía",
-            semana: "Semana 7 — Energía mecánica",
+            semana: "Transformaciones de la energía",
             questions
         });
     }
@@ -66,7 +66,7 @@ export class GameController {
             }
 
             // Respuestas correctas del backend para validar de forma segura
-            const correctAnswersMap: { [key: number]: number } = { 1: 1, 2: 2, 3: 0, 4: 1 };
+            const correctAnswersMap: { [key: number]: number } = { 1: 0, 2: 1, 3: 2, 4: 2 };
             
             let correctCount = 0;
             answers.forEach((ans: any) => {
@@ -104,7 +104,7 @@ export class GameController {
     }
 
     // 3. Obtener tabla de posiciones
-    static async getLeaderboard(req: Request, res: Response) {
+    static async getLeaderboard(_req: Request, res: Response) {
         try {
             const leaderboard = await GameModel.getLeaderboard();       
             return res.status(200).json(leaderboard);
