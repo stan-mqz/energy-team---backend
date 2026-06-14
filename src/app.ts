@@ -25,6 +25,7 @@ app.use("/api/section5", section5Routes);
 app.use("/api/section5/questions", section5QuestionRoutes);
 app.use("/api/section5/stats", section5StatsRoutes);
 app.use("/api/section6/stats", section6StatsRoutes);
+app.use("/api/section5/validate", section5ValidateRoutes);
 
 app.use("/api/section6", section6Routes);
 
