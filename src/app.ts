@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import section2Routes from './routes/section2.routes';
 
 import gameRoutes from './routes/games.routes';
 import section6Routes from './routes/section6.routes';
@@ -28,6 +29,9 @@ app.use("/api/section6/validate", section6ValidateRoutes);
 app.use('/api/semana7', gameRoutes);
 
 app.use(express.static("public"));
+
+// 
+app.use('/api/section2', section2Routes);
 
 // 404
 app.use((req, res) => {

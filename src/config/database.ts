@@ -1,5 +1,6 @@
-import mysql from "mysql2/promise";
 import dotenv from "dotenv";
+import mysql from "mysql2/promise";
+
 
 dotenv.config();
 
@@ -18,6 +19,8 @@ const pool = mysql.createPool({
 export const testConnection = async () => {
     try {
 
+        console.log("CWD:", process.cwd()); 
+        console.log("DB_USER:", process.env.DB_USER);
         const connection = await pool.getConnection();
 
         console.log("✅ MySQL connected");
