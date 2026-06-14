@@ -7,7 +7,7 @@ import {
     getCorrectAnswers,
     incrementCorrectAnswer,
     incrementIncorrectAnswer
-} from "../repositories/section6Validate.repository";
+} from "../repositories/section4Validate.repository";
 
 export const validateAnswers = async (
     answers: UserAnswer[]

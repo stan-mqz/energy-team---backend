@@ -1,4 +1,4 @@
-export interface Section6 {
+export interface Section4 {
     id: number;
     type: string;
     title: string;

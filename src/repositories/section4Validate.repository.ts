@@ -13,7 +13,7 @@ export const getCorrectAnswers = async (): Promise<CorrectAnswer[]> => {
             id,
             correct_answer
         FROM questions
-        WHERE topic = 'light'
+        WHERE topic = 'water'
     `);
 
     return rows;

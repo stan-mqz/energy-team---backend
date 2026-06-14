@@ -3,55 +3,55 @@ import { GameModel, GameScore } from '../models/game.model';
 
 export class GameController {
     
-    // 1. Obtener preguntas del juego de Transformaciones de la Energía
+    // 1. Obtener preguntas del juego de Energía Mecánica (Semana 7)
     static getGameQuestions(_req: Request, res: Response) {
-        // Banco de preguntas basado en el tema de Transformaciones de la Energía
+        // Banco de preguntas basado estrictamente en el libro de texto (Semana 7)
         const questions = [
             {
                 id: 1,
-                question: "¿Qué transformación de energía ocurre principalmente al encender una bombilla o foco?",
+                question: "¿De qué factores depende principalmente la energía mecánica?",
                 options: [
-                    "De energía eléctrica a energía luminosa y térmica.",
-                    "De energía química a térmica.",
-                    "De energía mecánica a eléctrica."
+                    "De la temperatura y el color del objeto.",
+                    "De la ubicación (altura) y del movimiento del objeto.",
+                    "Únicamente de la masa en reposo."
                 ],
-                answerIndex: 0
+                answerIndex: 1 // Segunda opción [cite: 17, 18]
             },
             {
                 id: 2,
-                question: "¿Qué tipo de energía se transforma en energía mecánica (cinética) cuando un automóvil se mueve?",
+                question: "Si lanzas una esfera de plastilina desde el doble de altura (60 cm en vez de 30 cm), ¿qué sucede con el agua del vaso?",
                 options: [
-                    "Energía luminosa.",
-                    "Energía química (del combustible).",
-                    "Energía nuclear."
+                    "El agua derramada disminuye.",
+                    "El nivel del agua se mantiene exactamente igual.",
+                    "Se derrama más agua porque la esfera impacta con mayor energía."
                 ],
-                answerIndex: 1
+                answerIndex: 2 // Tercera opción [cite: 13, 15, 18]
             },
             {
                 id: 3,
-                question: "En un panel solar, la luz del sol se transforma directamente en:",
+                question: "¿Cómo se llama la energía mecánica que posee un cuerpo debido a su altura o posición?",
                 options: [
-                    "Energía mecánica.",
-                    "Energía química.",
-                    "Energía eléctrica."
+                    "Energía potencial.",
+                    "Energía cinética.",
+                    "Energía térmica."
                 ],
-                answerIndex: 2
+                answerIndex: 0 // Primera opción [cite: 18]
             },
             {
                 id: 4,
-                question: "Cuando frotas tus manos para calentarlas en un día frío, ¿qué transformación ocurre?",
+                question: "Cuando un objeto se encuentra en movimiento libre, ¿cómo se le conoce a su energía mecánica?",
                 options: [
-                    "De energía térmica a mecánica.",
-                    "De energía química a eléctrica.",
-                    "De energía mecánica a térmica."
+                    "Energía elástica.",
+                    "Energía cinética.",
+                    "Energía estática."
                 ],
-                answerIndex: 2
+                answerIndex: 1 // Segunda opción [cite: 19]
             }
         ];
 
         return res.status(200).json({
             unidad: "Unidad 2: Energía",
-            semana: "Transformaciones de la energía",
+            semana: "Semana 7 — Energía mecánica",
             questions
         });
     }
@@ -66,7 +66,7 @@ export class GameController {
             }
 
             // Respuestas correctas del backend para validar de forma segura
-            const correctAnswersMap: { [key: number]: number } = { 1: 0, 2: 1, 3: 2, 4: 2 };
+            const correctAnswersMap: { [key: number]: number } = { 1: 1, 2: 2, 3: 0, 4: 1 };
             
             let correctCount = 0;
             answers.forEach((ans: any) => {

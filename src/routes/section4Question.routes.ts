@@ -2,14 +2,14 @@ import { Router }
     from "express";
 
 import {
-    getSection6StatsController
-} from "../controllers/section6Stats.controller";
+    getSection4QuestionsController
+} from "../controllers/section4Question.controller";
 
 const router = Router();
 
 router.get(
     "/",
-    getSection6StatsController
+    getSection4QuestionsController
 );
 
 export default router;

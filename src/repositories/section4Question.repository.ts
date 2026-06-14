@@ -1,6 +1,6 @@
 import pool from "../config/database";
 
-export const getSection6Questions = async () => {
+export const getSection4Questions = async () => {
 
     const [rows] = await pool.query(`
         SELECT
@@ -11,7 +11,7 @@ export const getSection6Questions = async () => {
             option_b,
             option_c
         FROM questions
-        WHERE topic = 'light'
+        WHERE topic = 'water'
     `);
 
     return rows;

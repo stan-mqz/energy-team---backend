@@ -2,9 +2,9 @@ import { Request, Response } from "express";
 
 import {
     validateAnswers
-} from "../services/section6Validate.service";
+} from "../services/section4Validate.service";
 
-export const validateSection6Controller = async (
+export const validateSection4Controller = async (
     req: Request,
     res: Response
 ): Promise<void> => {

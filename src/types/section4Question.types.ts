@@ -1,4 +1,4 @@
-export interface Section6Question {
+export interface Section4Question {
     id: number;
     topic: string;
     question: string;

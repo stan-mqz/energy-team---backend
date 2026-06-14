@@ -1,6 +1,6 @@
 import pool from "../config/database";
 
-export const getSection6Stats = async () => {
+export const getSection4Stats = async () => {
 
     const [rows] = await pool.query(`
                 SELECT
@@ -25,7 +25,7 @@ export const getSection6Stats = async () => {
         INNER JOIN question_stats qs
             ON q.id = qs.question_id
 
-        WHERE q.topic = 'light';
+        WHERE q.topic = 'water';
     `);
 
     return rows;

@@ -2,14 +2,14 @@ import { Router }
     from "express";
 
 import {
-    validateSection6Controller
-} from "../controllers/section6Validate.controller";
+    validateSection4Controller
+} from "../controllers/section4Validate.controller";
 
 const router = Router();
 
 router.post(
     "/",
-    validateSection6Controller
+    validateSection4Controller
 );
 
 export default router;

@@ -2,10 +2,10 @@ import { Request, Response }
     from "express";
 
 import {
-    fetchSection6Questions
-} from "../services/section6Question.service";
+    fetchSection4Questions
+} from "../services/section4Question.service";
 
-export const getSection6QuestionsController =
+export const getSection4QuestionsController =
     async (
         _req: Request,
         res: Response
@@ -14,7 +14,7 @@ export const getSection6QuestionsController =
         try {
 
             const questions =
-                await fetchSection6Questions();
+                await fetchSection4Questions();
 
             res.json({
                 ok: true,
